@@ -3,6 +3,8 @@ from torch.utils.data import Dataset, DataLoader
 import scipy.io as scp
 import numpy as np
 import torch
+import h5py
+import mat73
 
 #___________________________________________________________________________________________________________________________
 
@@ -11,8 +13,27 @@ class ngsimDataset(Dataset):
 
 
     def __init__(self, mat_file, t_h=30, t_f=10, d_s=2, enc_size = 64, grid_size = (13,3)):
-        self.D = scp.loadmat(mat_file)['traj']
-        self.T = scp.loadmat(mat_file)['tracks']
+        # try:
+        mat_data = scp.loadmat(mat_file)
+        # mat_data = mat73.loadmat(mat_file)
+        print('Loading data: ')
+        self.D = mat_data['traj']
+        self.T = mat_data['tracks']
+        # except:
+        #     with h5py.File(mat_file, 'r') as f:
+        #         self.D = np.array(f['res_traj'])
+        #          # Dereference all references and store as arrays
+        #         T_refs = np.array(f['res_t'])
+        #         # Assuming T_refs is 2D: (num_ds, num_veh)
+        #         self.T = np.empty(T_refs.shape, dtype=object)
+        #         for i in range(T_refs.shape[0]):
+        #             for j in range(T_refs.shape[1]):
+        #                 ref = T_refs[i, j]
+        #                 if ref:
+        #                     self.T[i, j] = np.array(f[ref])
+        #                 else:
+        #                     self.T[i, j] = np.empty((0, 4))
+
         self.t_h = t_h  # length of track history
         self.t_f = t_f  # length of predicted trajectory
         self.d_s = d_s  # down sampling rate of all sequences

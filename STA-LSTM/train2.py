@@ -166,29 +166,10 @@ for epoch_num in range(trainEpochs):
     except Exception as ex:
         print("Ran into the exception:",str(ex))
 
+    save_file_name = f'sta_lstm_{epoch_num}.tar'
 
-    # Plot only train loss
-    plt.figure(figsize=(10, 5))
-    plt.plot(train_loss, label='Train Loss')
-    plt.xlabel('Iterations (x100)')
-    plt.ylabel('Loss')
-    plt.title('Training Loss')
-    plt.legend()
-    plt.grid(True)
-    plt.savefig(f'train_loss_epoch_{epoch_num}.png')
-    plt.close()
-
-    # Plot only validation loss
-    plt.figure(figsize=(10, 5))
-    plt.plot(val_loss, label='Validation Loss', color='orange')
-    plt.xlabel('Epochs')
-    plt.ylabel('Loss')
-    plt.title('Validation Loss')
-    plt.legend()
-    plt.grid(True)
-    plt.savefig(f'val_loss_epoch_{epoch_num}.png')
-    plt.close()
+    torch.save(net.state_dict(), save_file_name)
 
 end_time = datetime.datetime.now()
 print('Total training time: ', end_time-start_time)
-torch.save(net.state_dict(), 'sta_lstm_150520251.tar')
+
