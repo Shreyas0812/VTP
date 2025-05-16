@@ -127,7 +127,7 @@ def visualize_specific_scenarios(hist_x, hist_y, gt_x, gt_y, pred_x, pred_y):
     
     # Select specific vehicles for visualization, making sure indices are within bounds
     # For the first timeframe (first subplot)
-    vehicle_indices_frame1 = np.arange(min(5, num_vehicles))  # Use first 5 vehicles or all if fewer
+    vehicle_indices_frame1 = np.arange(min(10, num_vehicles))  # Use first 5 vehicles or all if fewer
     
     # For the second timeframe (second subplot)
     # If we have at least 10 vehicles, use vehicles 5-9 for the second frame
@@ -222,12 +222,20 @@ def visualize_specific_scenarios(hist_x, hist_y, gt_x, gt_y, pred_x, pred_y):
     
     for idx in vehicle_indices_frame2:
         # Get vehicle data
-        vehicle_hist_x = hist_x[0][idx]
-        vehicle_hist_y = hist_y[0][idx]
-        vehicle_gt_x = gt_x[0][idx]
-        vehicle_gt_y = gt_y[0][idx]
-        vehicle_pred_x = pred_x[0][idx]
-        vehicle_pred_y = pred_y[0][idx]
+        # vehicle_hist_x = hist_x[0][idx]
+        # vehicle_hist_y = hist_y[0][idx]
+        # vehicle_gt_x = gt_x[0][idx]
+        # vehicle_gt_y = gt_y[0][idx]
+        # vehicle_pred_x = pred_x[0][idx]
+        # vehicle_pred_y = pred_y[0][idx]
+
+
+        vehicle_hist_x = hist_y[0][idx]
+        vehicle_hist_y = hist_x[0][idx]
+        vehicle_gt_x = gt_y[0][idx]
+        vehicle_gt_y = gt_x[0][idx]
+        vehicle_pred_x = pred_y[0][idx]
+        vehicle_pred_y = pred_x[0][idx]
         
         # Track min/max x values for setting axis limits
         min_x_values.append(np.min(vehicle_hist_x))
